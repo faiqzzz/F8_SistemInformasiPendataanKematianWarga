@@ -40,6 +40,12 @@ namespace SIP_KMW
             fu.ShowDialog();
         }
 
+        private void btnInputData_Click(object sender, EventArgs e)
+        {
+            FormInputData frm = new FormInputData();
+            frm.ShowDialog(); // ShowDialog supaya user fokus selesaikan input dulu
+        }
+
         
     }
 }
