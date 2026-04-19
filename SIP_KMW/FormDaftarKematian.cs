@@ -114,6 +114,71 @@ namespace SIP_KMW
             }
         }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            DialogResult konfirmasi = MessageBox.Show("Apakah Anda yakin ingin memperbarui data ini?",
+                              "Konfirmasi Perubahan", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (konfirmasi == DialogResult.No)
+
+                if (dgvKematian.CurrentRow == null)
+            {
+                MessageBox.Show("Pilih dulu data di tabel yang mau di-update!");
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(alamatDatabase))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // 1. Pastikan kolom 'Umur' dan 'Penyebab' sudah ada di Query
+                    string query = "UPDATE Tabel_Kematian SET Nama=@nama, Jenis_Kelamin=@jk, Tanggal_Lahir=@tglLahir, " +
+                                    "Tanggal_Wafat=@tglWafat, Umur=@umur, Penyebab=@penyebab, Alamat=@alamat, Status=@status " +
+                                    "WHERE NIK=@nik";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    // 2. Ambil angka umur dengan hati-hati
+                    int umurTerbaru;
+                    if (!int.TryParse(txtUmur.Text, out umurTerbaru))
+                    {
+                        MessageBox.Show("Isi umur harus angka!");
+                        return;
+                    }
+
+                    cmd.Parameters.AddWithValue("@jk", cbJenisKelamin.Text);
+                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
+                    cmd.Parameters.AddWithValue("@status", cbStatus.Text);
+                    cmd.Parameters.AddWithValue("@nik", txtNik.Text);
+                    cmd.Parameters.AddWithValue("@nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@tglLahir", dtpLahir.Value);
+                    cmd.Parameters.AddWithValue("@tglWafat", dtpWafat.Value);
+                    cmd.Parameters.AddWithValue("@umur", umurTerbaru); // Kirim angka umur terbaru
+                    cmd.Parameters.AddWithValue("@penyebab", cbPenyebab.Text); // Update juga penyebabnya
+
+                    int barisTerubah = cmd.ExecuteNonQuery();
+
+                    if (barisTerubah > 0)
+                    {
+                        MessageBox.Show("Data Berhasil Diperbarui!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Data gagal diubah. Pastikan NIK tidak diotak-atik!");
+                    }
+
+                    TampilData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error pas update: " + ex.Message);
+                }
+            }
+        }
+
+
         
     }
 }
