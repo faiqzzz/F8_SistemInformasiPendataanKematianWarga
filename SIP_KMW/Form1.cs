@@ -13,6 +13,9 @@ namespace SIP_KMW
 {
     public partial class Form1 : Form
     {
-    }
+        
+        string alamatDatabase = @"Data Source=DESKTOP-DDDRHRS\RIDHOFAIQAHMAD;Initial Catalog=DB_SIPKMW;Integrated Security=True";
 
+        
+    }
 }
