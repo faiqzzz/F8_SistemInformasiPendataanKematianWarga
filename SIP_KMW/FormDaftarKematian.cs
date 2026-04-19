@@ -71,6 +71,20 @@ namespace SIP_KMW
             }
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            // Panggil lagi fungsi narik data dari SQL
+            TampilData();
+
+            // Opsional: Bersihkan kotak pencarian kalau ada isinya
+            if (txtCari != null)
+            {
+                txtCari.Clear();
+            }
+
+            MessageBox.Show("Data telah diperbarui!", "Refresh Berhasil");
+        }
+
         
     }
 }
