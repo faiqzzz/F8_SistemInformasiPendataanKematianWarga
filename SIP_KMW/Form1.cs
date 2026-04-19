@@ -23,10 +23,9 @@ namespace SIP_KMW
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Bisa dikosongkan
+            
         }
 
-        // Ini fungsi login yang nanti kita sambungkan ke tombol
         private void prosesLogin()
         {
             using (SqlConnection conn = new SqlConnection(alamatDatabase))
@@ -42,9 +41,47 @@ namespace SIP_KMW
 
                     SqlDataReader rd = cmd.ExecuteReader();
 
+                    if (rd.Read()) 
+                    {
+                        string roleValue = rd["Role"].ToString();
+                        GlobalData.Role = roleValue;
+
+                        MessageBox.Show("Selamat Datang, " + roleValue);
+
+                        Form2 menu = new Form2(roleValue);
+                        menu.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Username atau Password salah!", "Gagal");
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ada error koneksi: " + ex.Message);
                 }
+            }
         }
 
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            prosesLogin();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
