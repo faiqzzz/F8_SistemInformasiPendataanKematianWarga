@@ -16,6 +16,35 @@ namespace SIP_KMW
         
         string alamatDatabase = @"Data Source=DESKTOP-DDDRHRS\RIDHOFAIQAHMAD;Initial Catalog=DB_SIPKMW;Integrated Security=True";
 
-        
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Bisa dikosongkan
+        }
+
+        // Ini fungsi login yang nanti kita sambungkan ke tombol
+        private void prosesLogin()
+        {
+            using (SqlConnection conn = new SqlConnection(alamatDatabase))
+            {
+                try
+                {
+                    conn.Open();
+                    // Query untuk cek user
+                    string query = "SELECT Role FROM Users WHERE Username=@user AND Password=@pass";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@user", txtUsername.Text);
+                    cmd.Parameters.AddWithValue("@pass", txtPassword.Text);
+
+                    SqlDataReader rd = cmd.ExecuteReader();
+
+                }
+                }
+        }
+
     }
 }
