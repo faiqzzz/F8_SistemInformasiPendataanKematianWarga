@@ -179,6 +179,29 @@ namespace SIP_KMW
         }
 
 
+        private void dgvKematian_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Supaya kalau klik header tabel nggak error
+            if (e.RowIndex >= 0)
+            {
+                // Mengambil baris yang diklik
+                DataGridViewRow row = dgvKematian.Rows[e.RowIndex];
+
+                // Pindahkan data dari tabel ke TextBox yang sudah kamu buat/paste tadi
+                cbJenisKelamin.Text = row.Cells["Jenis_Kelamin"].Value.ToString();
+                txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
+                cbStatus.Text = row.Cells["Status"].Value.ToString();
+                txtNik.Text = row.Cells["NIK"].Value.ToString();
+                txtNama.Text = row.Cells["Nama"].Value.ToString();
+                dtpLahir.Value = Convert.ToDateTime(row.Cells["Tanggal_Lahir"].Value);
+                dtpWafat.Value = Convert.ToDateTime(row.Cells["Tanggal_Wafat"].Value);
+                txtUmur.Text = row.Cells["Umur"].Value.ToString();
+
+                // Kunci NIK-nya supaya nggak bisa diubah (karena itu kunci utama di database)
+                txtNik.ReadOnly = true;
+            }
+        }
+
         
     }
 }
