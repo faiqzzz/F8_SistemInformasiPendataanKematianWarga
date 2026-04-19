@@ -85,6 +85,35 @@ namespace SIP_KMW
             MessageBox.Show("Data telah diperbarui!", "Refresh Berhasil");
         }
 
+        private void txtCari_TextChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(alamatDatabase))
+            {
+                try
+                {
+                    conn.Open();
+                    // Saya tambahkan OR Alamat LIKE @cari supaya wilayah bisa dicari juga
+                    string query = "SELECT * FROM Tabel_Kematian WHERE Nama LIKE @cari OR NIK LIKE @cari OR Alamat LIKE @cari";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+
+                    da.SelectCommand.Parameters.AddWithValue("@cari", "%" + txtCari.Text + "%");
+
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    dgvKematian.DataSource = dt;
+
+                    // Tambahkan ini biar lblTotal kamu update otomatis setiap ngetik
+                    // Sesuai deskripsi "Pengelolaan laporan dalam bentuk filter dan statistik"
+                    lblTotal.Text = "Jumlah Data: " + dt.Rows.Count.ToString() + " Orang";
+                }
+                catch (Exception ex)
+                {
+                    // Tetap pakai Console biar nggak pop-up terus pas lagi ngetik
+                    Console.WriteLine("Error Cari: " + ex.Message);
+                }
+            }
+        }
+
         
     }
 }
