@@ -245,6 +245,41 @@ namespace SIP_KMW
             }
         }
 
-        
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(alamatDatabase))
+            {
+                try
+                {
+                    conn.Open();
+                    // Query ini fleksibel: Cari Nama tapi juga saring per Kategori
+                    string query = @"SELECT * FROM Tabel_Kematian 
+                             WHERE Nama LIKE @nama 
+                             AND (Penyebab = @penyebab OR @penyebab = '-- Semua Kategori --')";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@nama", "%" + txtCari.Text + "%");
+
+                    // Jika user tidak milih kategori, tampilkan semua
+                    string kategori = string.IsNullOrEmpty(cbFilterPenyebab.Text) ? "-- Semua Kategori --" : cbFilterPenyebab.Text;
+                    cmd.Parameters.AddWithValue("@penyebab", kategori);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    dgvKematian.DataSource = dt;
+
+                    // FITUR STATISTIK (Sesuai deskripsi Admin)
+                    lblTotal.Text = "Jumlah Data: " + dt.Rows.Count.ToString() + " Orang";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Filter Gagal: " + ex.Message);
+                }
+            }
+        }
+
+       
     }
 }
