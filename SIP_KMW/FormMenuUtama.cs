@@ -33,6 +33,13 @@ namespace SIP_KMW
             }
         }
 
+        private void BtnManajemenUser_Click (object sender, EventArgs e)
+        {
+            // Buka jendela baru khusus buat ngatur user
+            FormManajemenUser fu = new FormManajemenUser();
+            fu.ShowDialog();
+        }
+
         
     }
 }
