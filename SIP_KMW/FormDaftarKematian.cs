@@ -297,6 +297,30 @@ namespace SIP_KMW
             }
         }
 
-        
+        private void HitungUmurOtomatis()
+        {
+            try
+            {
+                DateTime lahir = dtpLahir.Value;
+                DateTime wafat = dtpWafat.Value;
+                int umur = wafat.Year - lahir.Year;
+                if (wafat < lahir.AddYears(umur)) umur--;
+                if (umur < 0) umur = 0;
+                txtUmur.Text = umur.ToString();
+            }
+            catch { }
+        }
+
+
+        private void dtpLahir_ValueChanged(object sender, EventArgs e)
+        {
+            HitungUmurOtomatis();
+        }
+
+        private void dtpWafat_ValueChanged(object sender, EventArgs e)
+        {
+            HitungUmurOtomatis();
+        }
+
     }
 }
