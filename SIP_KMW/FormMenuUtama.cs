@@ -22,6 +22,17 @@ namespace SIP_KMW
             roleUser = role; // Simpan kiriman dari Form Login ke variabel ini
         }
 
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            // Tambahkan baris ini buat ngetes:
+            MessageBox.Show("Role yang terbaca adalah: " + roleUser);
+
+            if (roleUser == "Petugas")
+            {
+                BtnManajemenUser.Visible = false;
+            }
+        }
+
         
     }
 }
