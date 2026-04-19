@@ -46,6 +46,10 @@ namespace SIP_KMW
             frm.ShowDialog(); // ShowDialog supaya user fokus selesaikan input dulu
         }
 
-        
+        private void btnLihatData_Click(object sender, EventArgs e)
+        {
+            FormDaftarKematian frm = new FormDaftarKematian();
+            frm.Show();
+        }
     }
 }
