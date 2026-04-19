@@ -202,6 +202,49 @@ namespace SIP_KMW
             }
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // 1. Validasi: Pastikan ada NIK yang dipilih dari tabel
+            if (string.IsNullOrEmpty(txtNik.Text))
+            {
+                MessageBox.Show("Klik dulu baris di tabel yang mau dihapus!", "Peringatan");
+                return;
+            }
+
+            // 2. Konfirmasi: Biar gak asal hapus
+            DialogResult konfirmasi = MessageBox.Show("Yakin ingin menghapus data dengan NIK: " + txtNik.Text + "?",
+                                                     "Konfirmasi Hapus", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (konfirmasi == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(alamatDatabase))
+                {
+                    try
+                    {
+                        conn.Open();
+                        // 3. Query Delete
+                        string query = "DELETE FROM Tabel_Kematian WHERE NIK=@nik";
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@nik", txtNik.Text);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Data Berhasil Dihapus!", "Sukses");
+
+                        // 4. Refresh otomatis & bersih-bersih
+                        TampilData();
+                        txtNik.Clear();
+                        txtNama.Clear();
+                        txtUmur.Clear();
+                        cbPenyebab.SelectedIndex = -1;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Gagal hapus data: " + ex.Message);
+                    }
+                }
+            }
+        }
+
         
     }
 }
