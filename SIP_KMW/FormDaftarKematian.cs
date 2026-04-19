@@ -280,6 +280,23 @@ namespace SIP_KMW
             }
         }
 
-       
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvKematian.SelectAll();
+                DataObject dataObj = dgvKematian.GetClipboardContent();
+                if (dataObj != null)
+                    Clipboard.SetDataObject(dataObj);
+
+                MessageBox.Show("Data tabel sudah disalin (Copy). Silakan buka Excel dan tekan Paste (Ctrl+V).", "Ekspor Berhasil");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal ekspor: " + ex.Message);
+            }
+        }
+
+        
     }
 }
