@@ -10,6 +10,7 @@ namespace SIP_KMW
     {
         // static artinya variabel ini "nempel" di aplikasi, bukan di formm
         // jadi datanya gak bakal hilang pas pindah-pindah form
+        public static string NamaLengkap { get; set; }
         public static string Role = "Admin";
         public static string NamaUser;
     }

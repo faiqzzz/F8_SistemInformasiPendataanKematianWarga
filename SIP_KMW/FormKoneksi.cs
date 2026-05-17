@@ -25,7 +25,46 @@ namespace SIP_KMW
             btnLanjut.Enabled = false; // Tombol login dimatikan dulu.
         }
 
-        
+        private void btnCekKoneksi_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                try
+                {
+                    conn.Open();
+                    lblStatus.Text = "Status: Terkoneksi ke Database!";
+                    lblStatus.ForeColor = System.Drawing.Color.Green;
+
+                    MessageBox.Show("Koneksi Sukses!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Aktifkan tombol lanjut.
+                    btnLanjut.Enabled = true;
+                }
+                catch (Exception ex) // Tangani error koneksi dengan baik, jangan biarkan aplikasi crash.
+                {
+                    lblStatus.Text = "Status: Koneksi Gagal!";
+                    lblStatus.ForeColor = System.Drawing.Color.Red;
+                    MessageBox.Show("Gagal terhubung: " + ex.Message);
+                }
+            }
+        }
+
+        private void btnLanjut_Click(object sender, EventArgs e)
+        {
+            FormLogin login = new FormLogin();
+            login.Show();
+            this.Hide();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormKoneksi_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
