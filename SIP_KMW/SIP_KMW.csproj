@@ -48,7 +48,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.16.0.18925.20022\lib\net40\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Excel.14.0.4760.1000\lib\net20\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,17 +71,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="FormInputData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormInputData.Designer.cs">
+      <DependentUpon>FormInputData.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormDaftarKematian.cs">
+    <Compile Include="FormKoneksi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormDaftarKematian.Designer.cs">
-      <DependentUpon>FormDaftarKematian.cs</DependentUpon>
+    <Compile Include="FormKoneksi.Designer.cs">
+      <DependentUpon>FormKoneksi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="FormManajemenUser.cs">
       <SubType>Form</SubType>
@@ -85,23 +101,18 @@
     <Compile Include="FormMenuUtama.Designer.cs">
       <DependentUpon>FormMenuUtama.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormInputData.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormInputData.Designer.cs">
-      <DependentUpon>FormInputData.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalData.cs" />
+    <Compile Include="Koneksi.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormDaftarKematian.resx">
-      <DependentUpon>FormDaftarKematian.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormInputData.resx">
       <DependentUpon>FormInputData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormKoneksi.resx">
+      <DependentUpon>FormKoneksi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormManajemenUser.resx">
       <DependentUpon>FormManajemenUser.cs</DependentUpon>
@@ -119,6 +130,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

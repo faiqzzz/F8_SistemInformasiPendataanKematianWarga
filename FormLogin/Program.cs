@@ -1,13 +1,12 @@
-﻿using SIP_KMW;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SIP_KMW
+namespace FormLogin
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -17,10 +16,7 @@ namespace SIP_KMW
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Inilah baris yang menentukan form mana yang muncul pertama kali
-            // Kita arahkan ke FormKoneksi agar user harus cek koneksi dulu
-            Application.Run(new FormKoneksi());
+            Application.Run(new Form1());
         }
     }
 }

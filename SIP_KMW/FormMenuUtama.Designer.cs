@@ -1,8 +1,20 @@
-﻿namespace SIP_KMW
+﻿using System;
+using System.Data.SqlClient;
+
+namespace SIP_KMW
 {
-    partial class Form2
+    partial class FormMenuUtama
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// 
 
         protected override void Dispose(bool disposing)
         {
@@ -13,102 +25,109 @@
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            this.BtnManajemenUser = new System.Windows.Forms.Button();
-            this.btnInputData = new System.Windows.Forms.Button();
-            this.btnLihatData = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblJudul = new System.Windows.Forms.Label();
+            this.lblTotalData = new System.Windows.Forms.Label();
+            this.btnBukaInput = new System.Windows.Forms.Button();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.lblWelcome = new System.Windows.Forms.Label();
+            this.lblRole = new System.Windows.Forms.Label();
+            this.btnManajemenUser = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // BtnManajemenUser
+            // lblJudul
             // 
-            this.BtnManajemenUser.Location = new System.Drawing.Point(321, 127);
-            this.BtnManajemenUser.Name = "BtnManajemenUser";
-            this.BtnManajemenUser.Size = new System.Drawing.Size(138, 23);
-            this.BtnManajemenUser.TabIndex = 0;
-            this.BtnManajemenUser.Text = "Manajemen User";
-            this.BtnManajemenUser.UseVisualStyleBackColor = true;
-            this.BtnManajemenUser.Click += new System.EventHandler(this.BtnManajemenUser_Click);
+            this.lblJudul.AutoSize = true;
+            this.lblJudul.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblJudul.Location = new System.Drawing.Point(293, 53);
+            this.lblJudul.Name = "lblJudul";
+            this.lblJudul.Size = new System.Drawing.Size(215, 25);
+            this.lblJudul.TabIndex = 0;
+            this.lblJudul.Text = "Dashboard SIP-KMW";
             // 
-            // btnInputData
+            // lblTotalData
             // 
-            this.btnInputData.Location = new System.Drawing.Point(321, 221);
-            this.btnInputData.Name = "btnInputData";
-            this.btnInputData.Size = new System.Drawing.Size(138, 23);
-            this.btnInputData.TabIndex = 1;
-            this.btnInputData.Text = "Input Data";
-            this.btnInputData.UseVisualStyleBackColor = true;
-            this.btnInputData.Click += new System.EventHandler(this.btnInputData_Click);
+            this.lblTotalData.AutoSize = true;
+            this.lblTotalData.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalData.Location = new System.Drawing.Point(208, 184);
+            this.lblTotalData.Name = "lblTotalData";
+            this.lblTotalData.Size = new System.Drawing.Size(385, 22);
+            this.lblTotalData.TabIndex = 1;
+            this.lblTotalData.Text = "Total Warga Terdata Meninggal : 0 orang";
+            this.lblTotalData.Click += new System.EventHandler(this.lblTotalData_Click);
             // 
-            // btnLihatData
+            // btnBukaInput
             // 
-            this.btnLihatData.Location = new System.Drawing.Point(321, 318);
-            this.btnLihatData.Name = "btnLihatData";
-            this.btnLihatData.Size = new System.Drawing.Size(138, 23);
-            this.btnLihatData.TabIndex = 2;
-            this.btnLihatData.Text = "Lihat Data";
-            this.btnLihatData.UseVisualStyleBackColor = true;
-            this.btnLihatData.Click += new System.EventHandler(this.btnLihatData_Click);
+            this.btnBukaInput.Location = new System.Drawing.Point(279, 229);
+            this.btnBukaInput.Name = "btnBukaInput";
+            this.btnBukaInput.Size = new System.Drawing.Size(243, 23);
+            this.btnBukaInput.TabIndex = 2;
+            this.btnBukaInput.Text = "INPUT";
+            this.btnBukaInput.UseVisualStyleBackColor = true;
+            this.btnBukaInput.Click += new System.EventHandler(this.btnBukaInput_Click);
             // 
-            // label1
+            // btnLogout
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Lucida Sans", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(305, 102);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(164, 22);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Buat akun baru";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnLogout.Location = new System.Drawing.Point(658, 381);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(75, 23);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.Text = "LOGOUT";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
-            // label2
+            // lblWelcome
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Lucida Sans", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(317, 196);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(145, 22);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Tambah Data";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Location = new System.Drawing.Point(374, 328);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(52, 13);
+            this.lblWelcome.TabIndex = 4;
+            this.lblWelcome.Text = "Welcome";
             // 
-            // label3
+            // lblRole
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Lucida Sans", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(317, 293);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(158, 22);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Data Kematian";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRole.AutoSize = true;
+            this.lblRole.Location = new System.Drawing.Point(348, 357);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(105, 13);
+            this.lblRole.TabIndex = 5;
+            this.lblRole.Text = "Akses : Administrator";
             // 
-            // Form2
+            // btnManajemenUser
+            // 
+            this.btnManajemenUser.Location = new System.Drawing.Point(279, 272);
+            this.btnManajemenUser.Name = "btnManajemenUser";
+            this.btnManajemenUser.Size = new System.Drawing.Size(243, 23);
+            this.btnManajemenUser.TabIndex = 6;
+            this.btnManajemenUser.Text = "ManajemenUser";
+            this.btnManajemenUser.UseVisualStyleBackColor = true;
+            this.btnManajemenUser.Visible = false;
+            this.btnManajemenUser.Click += new System.EventHandler(this.btnManajemenUser_Click);
+            // 
+            // FormMenuUtama
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.IndianRed;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnLihatData);
-            this.Controls.Add(this.btnInputData);
-            this.Controls.Add(this.BtnManajemenUser);
-            this.Name = "Form2";
-            this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Controls.Add(this.btnManajemenUser);
+            this.Controls.Add(this.lblRole);
+            this.Controls.Add(this.lblWelcome);
+            this.Controls.Add(this.btnLogout);
+            this.Controls.Add(this.btnBukaInput);
+            this.Controls.Add(this.lblTotalData);
+            this.Controls.Add(this.lblJudul);
+            this.Name = "FormMenuUtama";
+            this.Text = "FormUtama";
+            this.Load += new System.EventHandler(this.FormMenuUtama_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,11 +135,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Button BtnManajemenUser;
-        private System.Windows.Forms.Button btnInputData;
-        private System.Windows.Forms.Button btnLihatData;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblJudul;
+        private System.Windows.Forms.Label lblTotalData;
+        private System.Windows.Forms.Button btnBukaInput;
+        private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Label lblWelcome;
+        private System.Windows.Forms.Label lblRole;
+        private System.Windows.Forms.Button btnManajemenUser;
     }
 }

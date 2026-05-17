@@ -13,152 +13,254 @@ namespace SIP_KMW
 {
     public partial class FormInputData : Form
     {
+        // 1. Inisialisasi Class Koneksi & Variabel Global
+        Koneksi konn = new Koneksi();
+        DataTable dt = new DataTable();
+        BindingSource bs = new BindingSource();
+
         public FormInputData()
         {
             InitializeComponent();
         }
 
-        private void dtpWafat_ValueChanged(object sender, EventArgs e)
-        {
-            HitungUmurOtomatis();
-        }
-
-        private void HitungUmurOtomatis()
-        {
-            try
-            {
-                DateTime lahir = dtpLahir.Value;
-                DateTime wafat = dtpWafat.Value;
-
-                // Rumus: Tahun Wafat - Tahun Lahir
-                int umur = wafat.Year - lahir.Year;
-
-                // Koreksi: Jika belum sampai tanggal ulang tahunnya di tahun wafat tersebut, umur kurangi 1
-                if (wafat < lahir.AddYears(umur))
-                {
-                    umur--;
-                }
-
-                // Pastikan umur tidak negatif (antisipasi salah pilih tanggal)
-                if (umur < 0) umur = 0;
-
-                txtUmur.Text = umur.ToString();
-            }
-            catch
-            {
-                // Biarkan kosong agar tidak ganggu pas ganti tanggal
-            }
-        }
-
         private void FormInputData_Load(object sender, EventArgs e)
         {
-            // Ini biar pas dibuka, ComboBox-nya otomatis milih pilihan pertama kamu
-            // Kalau di Items kamu baris pertamanya "-- Pilih Penyebab --", maka itu yang muncul
-            cbPenyebab.SelectedIndex = 0;
+            TampilkanData();
+            TampilkanPenyebab();
+
+            // Proteksi Role
+            if (Session.Role == "Petugas")
+            {
+                btnHapus.Enabled = false;
+                btnCetak.Visible = false;
+            }
         }
 
-        private void dtpLahir_ValueChanged(object sender, EventArgs e)
+        // --- POIN 2 & 4 & 5: View, Binding, & Binding Navigator ---
+        void TampilkanData()
         {
-            HitungUmurOtomatis();
+            // Menggunakan VIEW (v_DataKematianLengkap)
+            dt = konn.GetData("SELECT * FROM v_DataKematianLengkap");
+            bs.DataSource = dt;
+            dgvData.DataSource = bs;
+
+            // Menghubungkan Navigator
+            if (bindingNavigator1 != null)
+            {
+                bindingNavigator1.BindingSource = bs;
+            }
         }
 
+        // --- POIN 1: INSERT menggunakan STORED PROCEDURE ---
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            string alamatDatabase = "Data Source=DESKTOP-DDDRHRS\\RIDHOFAIQAHMAD;Initial Catalog=DB_SIPKMW;Integrated Security=True";
-
-            // 1. Cek NIK, Nama, dan pastikan ComboBox sudah dipilih
-            if (string.IsNullOrEmpty(txtNik.Text) || string.IsNullOrEmpty(txtNama.Text) || cbPenyebab.SelectedIndex == -1)
-            {
-                MessageBox.Show("NIK, Nama, dan Penyebab harus diisi/dipilih ya!", "Peringatan");
-                return;
-            }
-
-            using (SqlConnection conn = new SqlConnection(alamatDatabase))
+            using (SqlConnection conn = konn.GetConn())
             {
                 try
                 {
                     conn.Open();
-                    // 2. Query SQL ditambah kolom Penyebab
-                    string query = "INSERT INTO Tabel_Kematian (NIK, Nama, Jenis_Kelamin, Tanggal_Lahir, Tanggal_Wafat, Umur, Penyebab, Alamat, Status) " +
-                                    "VALUES (@nik, @nama, @jk, @tglLahir, @tglWafat, @umur, @penyebab, @alamat, @status)";
+                    SqlCommand cmd = new SqlCommand("sp_InsertDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    // 3. Masukkan data ke parameter SQL
-                    cmd.Parameters.AddWithValue("@jk", cbJenisKelamin.Text); // Tambahan JK
-                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
-                    cmd.Parameters.AddWithValue("@status", "Belum Verifikasi"); // Default untuk input baru
-                    cmd.Parameters.AddWithValue("@nik", txtNik.Text);
+                    cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
                     cmd.Parameters.AddWithValue("@nama", txtNama.Text);
-                    cmd.Parameters.AddWithValue("@tglLahir", dtpLahir.Value);
-                    cmd.Parameters.AddWithValue("@tglWafat", dtpWafat.Value);
-                    cmd.Parameters.AddWithValue("@umur", int.Parse(txtUmur.Text));
-                    cmd.Parameters.AddWithValue("@penyebab", cbPenyebab.Text); // INI DIA COMBOBOX-NYA
+                    cmd.Parameters.AddWithValue("@jk", rbLaki.Checked ? "Laki-laki" : "Perempuan");
+                    cmd.Parameters.AddWithValue("@tglL", dtpLahir.Value.Date);
+                    cmd.Parameters.AddWithValue("@tglW", dtpWafat.Value.Date);
+                    cmd.Parameters.AddWithValue("@usia", int.Parse(txtUsia.Text));
+                    cmd.Parameters.AddWithValue("@sebab", cbPenyebab.Text);
+                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
+                    cmd.Parameters.AddWithValue("@userid", 7); // Default Admin ID
 
                     cmd.ExecuteNonQuery();
-
-                    MessageBox.Show("Data Kematian Berhasil Disimpan!", "Sukses");
-
-                    // 4. Kosongkan form setelah simpan
-                    txtNik.Clear();
-                    txtNama.Clear();
-                    txtUmur.Clear();
-                    cbPenyebab.SelectedIndex = -1; // ComboBox balik jadi kosong lagi
+                    MessageBox.Show("Data Berhasil Disimpan!", "Sukses");
+                    TampilkanData();
+                    BersihkanLabel();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Waduh, Error pas simpan: " + ex.Message);
+                    MessageBox.Show("Error SQL: " + ex.Message);
                 }
             }
         }
 
-        private void txtNik_TextChanged(object sender, EventArgs e)
+        // --- POIN 1: UPDATE menggunakan STORED PROCEDURE ---
+        private void btnUbah_Click(object sender, EventArgs e)
         {
-           
-        }
-
-        private void txtNik_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Hanya mengizinkan Angka (Digit) dan tombol Backspace (Control)
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            using (SqlConnection conn = konn.GetConn())
             {
-                e.Handled = true; // "Menolak" input jika bukan angka
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_UpdateDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
+                    cmd.Parameters.AddWithValue("@nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@jk", rbLaki.Checked ? "Laki-laki" : "Perempuan");
+                    cmd.Parameters.AddWithValue("@tglL", dtpLahir.Value.Date);
+                    cmd.Parameters.AddWithValue("@tglW", dtpWafat.Value.Date);
+                    cmd.Parameters.AddWithValue("@usia", int.Parse(txtUsia.Text));
+                    cmd.Parameters.AddWithValue("@sebab", cbPenyebab.Text);
+                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data Berhasil Diperbarui!", "Sukses");
+                    TampilkanData();
+                }
+                catch (Exception ex) { MessageBox.Show("Error Update: " + ex.Message); }
             }
         }
 
-        private void txtNama_TextChanged(object sender, EventArgs e)
+        // --- POIN 1: DELETE menggunakan STORED PROCEDURE ---
+        private void btnHapus_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtNIK.Text)) return;
 
+            if (MessageBox.Show("Hapus data " + txtNama.Text + "?", "Konfirmasi",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (SqlConnection conn = konn.GetConn())
+                {
+                    try
+                    {
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("sp_DeleteDataKematian", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
+                        cmd.Parameters.AddWithValue("@UserID", 7);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Data berhasil dihapus.");
+                        TampilkanData();
+                        BersihkanLabel();
+                    }
+                    catch (Exception ex) { MessageBox.Show("Error Hapus: " + ex.Message); }
+                }
+            }
         }
 
-        private void txtUmur_TextChanged(object sender, EventArgs e)
+        // --- POIN 3: SQL INJECTION di Fitur Pencarian ---
+        // Penjelasan: Menggunakan string concatenation tanpa parameter agar rentan
+        private void txtCari_TextChanged(object sender, EventArgs e)
         {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_CariDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@keyword", txtCari.Text);
 
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dtSearch = new DataTable();
+                    da.Fill(dtSearch);
+                    bs.DataSource = dtSearch; // Tetap pakai BindingSource (Poin 4)
+                }
+                catch (Exception ex) { /* Debug */ }
+            }
         }
 
-        private void cbPenyebab_SelectedIndexChanged(object sender, EventArgs e)
+        // --- SELEKSI DATA Grid ---
+        private void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvData.Rows[e.RowIndex];
+                txtNIK.Text = row.Cells["NIK"].Value.ToString();
+                txtNama.Text = row.Cells["NamaAlmarhum"].Value.ToString();
+                txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
+                txtUsia.Text = row.Cells["Usia"].Value.ToString();
+                cbPenyebab.Text = row.Cells["Penyebab"].Value.ToString();
+                dtpLahir.Value = Convert.ToDateTime(row.Cells["TanggalLahir"].Value);
+                dtpWafat.Value = Convert.ToDateTime(row.Cells["TanggalWafat"].Value);
 
+                string jk = row.Cells["JenisKelamin"].Value.ToString();
+                if (jk == "Laki-laki") rbLaki.Checked = true;
+                else rbPerempuan.Checked = true;
+            }
         }
 
-        private void txtAlamat_TextChanged(object sender, EventArgs e)
+        // --- LOGIKA FORM & VALIDASI ---
+        void BersihkanLabel()
         {
-
+            txtNIK.Clear();
+            txtNama.Clear();
+            txtAlamat.Clear();
+            txtUsia.Clear();
+            txtNIK.Focus();
         }
 
-        private void cbJenisKelamin_SelectedIndexChanged(object sender, EventArgs e)
+        void UpdateOtomatisUsia()
         {
-
+            int usia = dtpWafat.Value.Year - dtpLahir.Value.Year;
+            if (dtpWafat.Value < dtpLahir.Value.AddYears(usia)) usia--;
+            if (usia < 0) usia = 0;
+            txtUsia.Text = usia.ToString();
         }
 
-        private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void dtpWafat_ValueChanged(object sender, EventArgs e) => UpdateOtomatisUsia();
+        private void dtpLahir_ValueChanged(object sender, EventArgs e) => UpdateOtomatisUsia();
 
+        private void txtNIK_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar)) e.Handled = true;
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void txtNama_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar)) e.Handled = true;
+        }
 
+        void TampilkanPenyebab()
+        {
+            try
+            {
+                DataTable dtPenyebab = konn.GetData("SELECT NamaPenyebab FROM MasterPenyebab");
+                cbPenyebab.Items.Clear();
+                foreach (DataRow dr in dtPenyebab.Rows)
+                {
+                    cbPenyebab.Items.Add(dr["NamaPenyebab"].ToString());
+                }
+            }
+            catch { /* Ignored */ }
+        }
+
+        private void btnTampilkan_Click(object sender, EventArgs e)
+        {
+            txtCari.Clear();
+            BersihkanLabel();
+            TampilkanData();
+        }
+
+        private void btnKembali_Click(object sender, EventArgs e)
+        {
+            FormMenuUtama utama = new FormMenuUtama();
+            utama.Show();
+            this.Close();
+        }
+
+        private void btnCetak_Click(object sender, EventArgs e)
+        {
+            // Kode Excel interop kamu (Sama seperti sebelumnya)
+            if (dgvData.Rows.Count > 0)
+            {
+                Microsoft.Office.Interop.Excel.Application xcelApp = new Microsoft.Office.Interop.Excel.Application();
+                xcelApp.Application.Workbooks.Add(Type.Missing);
+                for (int i = 1; i < dgvData.Columns.Count + 1; i++) xcelApp.Cells[1, i] = dgvData.Columns[i - 1].HeaderText;
+                for (int i = 0; i < dgvData.Rows.Count; i++)
+                {
+                    if (dgvData.Rows[i].IsNewRow) continue;
+                    for (int j = 0; j < dgvData.Columns.Count; j++)
+                    {
+                        var cellValue = dgvData.Rows[i].Cells[j].Value;
+                        xcelApp.Cells[i + 2, j + 1] = cellValue != null ? cellValue.ToString() : "";
+                    }
+                }
+                xcelApp.Columns.AutoFit();
+                xcelApp.Visible = true;
+            }
         }
     }
 }

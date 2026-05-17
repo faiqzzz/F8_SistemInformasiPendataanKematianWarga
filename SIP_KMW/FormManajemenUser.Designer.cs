@@ -28,107 +28,164 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dgvUser = new System.Windows.Forms.DataGridView();
+            this.cbRole = new System.Windows.Forms.ComboBox();
+            this.btnSimpan = new System.Windows.Forms.Button();
+            this.btnHapus = new System.Windows.Forms.Button();
+            this.btnUbah = new System.Windows.Forms.Button();
+            this.btnBersih = new System.Windows.Forms.Button();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.cbRole = new System.Windows.Forms.ComboBox();
+            this.btnKembali = new System.Windows.Forms.Button();
+            this.txtNamaLengkap = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtUsername
+            // dgvUser
             // 
-            this.txtUsername.Location = new System.Drawing.Point(183, 102);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(121, 20);
-            this.txtUsername.TabIndex = 0;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(183, 145);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(121, 20);
-            this.txtPassword.TabIndex = 1;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(229, 232);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUser.Location = new System.Drawing.Point(290, 41);
+            this.dgvUser.Name = "dgvUser";
+            this.dgvUser.Size = new System.Drawing.Size(468, 183);
+            this.dgvUser.TabIndex = 0;
+            this.dgvUser.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUser_CellClick);
             // 
             // cbRole
             // 
-            this.cbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRole.FormattingEnabled = true;
             this.cbRole.Items.AddRange(new object[] {
             "Administrator",
             "Petugas"});
-            this.cbRole.Location = new System.Drawing.Point(183, 184);
+            this.cbRole.Location = new System.Drawing.Point(141, 176);
             this.cbRole.Name = "cbRole";
             this.cbRole.Size = new System.Drawing.Size(121, 21);
-            this.cbRole.TabIndex = 4;
+            this.cbRole.TabIndex = 1;
+            // 
+            // btnSimpan
+            // 
+            this.btnSimpan.Location = new System.Drawing.Point(187, 215);
+            this.btnSimpan.Name = "btnSimpan";
+            this.btnSimpan.Size = new System.Drawing.Size(75, 23);
+            this.btnSimpan.TabIndex = 2;
+            this.btnSimpan.Text = "Simpan";
+            this.btnSimpan.UseVisualStyleBackColor = true;
+            this.btnSimpan.Click += new System.EventHandler(this.btnSimpan_Click);
+            // 
+            // btnHapus
+            // 
+            this.btnHapus.Location = new System.Drawing.Point(577, 243);
+            this.btnHapus.Name = "btnHapus";
+            this.btnHapus.Size = new System.Drawing.Size(75, 23);
+            this.btnHapus.TabIndex = 3;
+            this.btnHapus.Text = "Hapus";
+            this.btnHapus.UseVisualStyleBackColor = true;
+            this.btnHapus.Click += new System.EventHandler(this.btnHapus_Click);
+            // 
+            // btnUbah
+            // 
+            this.btnUbah.Location = new System.Drawing.Point(467, 243);
+            this.btnUbah.Name = "btnUbah";
+            this.btnUbah.Size = new System.Drawing.Size(75, 23);
+            this.btnUbah.TabIndex = 4;
+            this.btnUbah.Text = "Ubah";
+            this.btnUbah.UseVisualStyleBackColor = true;
+            this.btnUbah.Click += new System.EventHandler(this.btnUbah_Click);
+            // 
+            // btnBersih
+            // 
+            this.btnBersih.Location = new System.Drawing.Point(683, 243);
+            this.btnBersih.Name = "btnBersih";
+            this.btnBersih.Size = new System.Drawing.Size(75, 23);
+            this.btnBersih.TabIndex = 5;
+            this.btnBersih.Text = "Bersihkan";
+            this.btnBersih.UseVisualStyleBackColor = true;
+            this.btnBersih.Click += new System.EventHandler(this.btnBersih_Click);
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Location = new System.Drawing.Point(102, 86);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(160, 20);
+            this.txtUsername.TabIndex = 6;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(102, 133);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(160, 20);
+            this.txtPassword.TabIndex = 8;
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // btnKembali
+            // 
+            this.btnKembali.Location = new System.Drawing.Point(700, 404);
+            this.btnKembali.Name = "btnKembali";
+            this.btnKembali.Size = new System.Drawing.Size(75, 23);
+            this.btnKembali.TabIndex = 9;
+            this.btnKembali.Text = "Kembali";
+            this.btnKembali.UseVisualStyleBackColor = true;
+            this.btnKembali.Click += new System.EventHandler(this.btnKembali_Click);
+            // 
+            // txtNamaLengkap
+            // 
+            this.txtNamaLengkap.Location = new System.Drawing.Point(102, 41);
+            this.txtNamaLengkap.Name = "txtNamaLengkap";
+            this.txtNamaLengkap.Size = new System.Drawing.Size(160, 20);
+            this.txtNamaLengkap.TabIndex = 10;
+            this.txtNamaLengkap.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNamaLengkap_KeyPress);
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Lucida Sans", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(32, 104);
+            this.label1.Location = new System.Drawing.Point(16, 44);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Username";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Nama Lengkap";
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Lucida Sans", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(32, 145);
+            this.label2.Location = new System.Drawing.Point(41, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 15);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Password";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Username";
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Lucida Sans", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(32, 190);
+            this.label3.Location = new System.Drawing.Point(39, 136);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 15);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Role";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Password";
             // 
             // FormManajemenUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.IndianRed;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.cbRole);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.txtNamaLengkap);
+            this.Controls.Add(this.btnKembali);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.btnBersih);
+            this.Controls.Add(this.btnUbah);
+            this.Controls.Add(this.btnHapus);
+            this.Controls.Add(this.btnSimpan);
+            this.Controls.Add(this.cbRole);
+            this.Controls.Add(this.dgvUser);
             this.Name = "FormManajemenUser";
             this.Text = "FormManajemenUser";
             this.Load += new System.EventHandler(this.FormManajemenUser_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,10 +193,16 @@
 
         #endregion
 
+        private System.Windows.Forms.DataGridView dgvUser;
+        private System.Windows.Forms.ComboBox cbRole;
+        private System.Windows.Forms.Button btnSimpan;
+        private System.Windows.Forms.Button btnHapus;
+        private System.Windows.Forms.Button btnUbah;
+        private System.Windows.Forms.Button btnBersih;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.ComboBox cbRole;
+        private System.Windows.Forms.Button btnKembali;
+        private System.Windows.Forms.TextBox txtNamaLengkap;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
