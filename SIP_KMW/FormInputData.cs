@@ -23,20 +23,26 @@ namespace SIP_KMW
             InitializeComponent();
         }
 
-       
-
-        void TampilkanPenyebab()
+        
+        // --- POIN 3: SQL INJECTION di Fitur Pencarian ---
+        // Penjelasan: Menggunakan string concatenation tanpa parameter agar rentan
+        private void txtCari_TextChanged(object sender, EventArgs e)
         {
-            try
+            using (SqlConnection conn = konn.GetConn())
             {
-                DataTable dtPenyebab = konn.GetData("SELECT NamaPenyebab FROM MasterPenyebab");
-                cbPenyebab.Items.Clear();
-                foreach (DataRow dr in dtPenyebab.Rows)
+                try
                 {
-                    cbPenyebab.Items.Add(dr["NamaPenyebab"].ToString());
+                    SqlCommand cmd = new SqlCommand("sp_CariDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@keyword", txtCari.Text);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dtSearch = new DataTable();
+                    da.Fill(dtSearch);
+                    bs.DataSource = dtSearch; // Tetap pakai BindingSource (Poin 4)
                 }
+                catch (Exception ex) { /* Debug */ }
             }
-            catch { /* Ignored */ }
         }
 
         
