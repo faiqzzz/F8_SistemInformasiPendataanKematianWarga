@@ -51,6 +51,96 @@ namespace SIP_KMW
             }
         }
 
+        // --- POIN 1: INSERT menggunakan STORED PROCEDURE ---
+        private void btnSimpan_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_InsertDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
+                    cmd.Parameters.AddWithValue("@nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@jk", rbLaki.Checked ? "Laki-laki" : "Perempuan");
+                    cmd.Parameters.AddWithValue("@tglL", dtpLahir.Value.Date);
+                    cmd.Parameters.AddWithValue("@tglW", dtpWafat.Value.Date);
+                    cmd.Parameters.AddWithValue("@usia", int.Parse(txtUsia.Text));
+                    cmd.Parameters.AddWithValue("@sebab", cbPenyebab.Text);
+                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
+                    cmd.Parameters.AddWithValue("@userid", 7); // Default Admin ID
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data Berhasil Disimpan!", "Sukses");
+                    TampilkanData();
+                    BersihkanLabel();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error SQL: " + ex.Message);
+                }
+            }
+        }
+
+        // --- POIN 1: UPDATE menggunakan STORED PROCEDURE ---
+        private void btnUbah_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_UpdateDataKematian", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
+                    cmd.Parameters.AddWithValue("@nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@jk", rbLaki.Checked ? "Laki-laki" : "Perempuan");
+                    cmd.Parameters.AddWithValue("@tglL", dtpLahir.Value.Date);
+                    cmd.Parameters.AddWithValue("@tglW", dtpWafat.Value.Date);
+                    cmd.Parameters.AddWithValue("@usia", int.Parse(txtUsia.Text));
+                    cmd.Parameters.AddWithValue("@sebab", cbPenyebab.Text);
+                    cmd.Parameters.AddWithValue("@alamat", txtAlamat.Text);
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data Berhasil Diperbarui!", "Sukses");
+                    TampilkanData();
+                }
+                catch (Exception ex) { MessageBox.Show("Error Update: " + ex.Message); }
+            }
+        }
+
+        // --- POIN 1: DELETE menggunakan STORED PROCEDURE ---
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNIK.Text)) return;
+
+            if (MessageBox.Show("Hapus data " + txtNama.Text + "?", "Konfirmasi",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (SqlConnection conn = konn.GetConn())
+                {
+                    try
+                    {
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("sp_DeleteDataKematian", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@nik", txtNIK.Text);
+                        cmd.Parameters.AddWithValue("@UserID", 7);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Data berhasil dihapus.");
+                        TampilkanData();
+                        BersihkanLabel();
+                    }
+                    catch (Exception ex) { MessageBox.Show("Error Hapus: " + ex.Message); }
+                }
+            }
+        }
+
         
     }
 }
