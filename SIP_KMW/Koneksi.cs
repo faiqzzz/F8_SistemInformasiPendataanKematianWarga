@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace SIP_KMW
 {
@@ -19,6 +20,26 @@ namespace SIP_KMW
             return conn;
         }
 
-        
+        public DataTable GetData(string query)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conn = GetConn(); // Pastikan namanya GetConn atau sesuai fungsi koneksimu
+            try
+            {
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally { conn.Close(); }
+            return dt;
+        }
+
+
     }
+
+
 }
