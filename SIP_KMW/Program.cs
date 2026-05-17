@@ -11,15 +11,14 @@ namespace SIP_KMW
     {
         /// <summary>
         /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Inilah baris yang menentukan form mana yang muncul pertama kali
-            // Kita arahkan ke FormKoneksi agar user harus cek koneksi dulu
+            // Inilah baris yang menentukan form mana yang muncul pertama kali.
+            // Kita arahkan ke FormKoneksi agar user harus cek koneksi dulu.
             Application.Run(new FormKoneksi());
         }
     }
