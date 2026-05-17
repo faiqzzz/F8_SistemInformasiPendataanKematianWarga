@@ -23,25 +23,31 @@ namespace SIP_KMW
             InitializeComponent();
         }
 
-        
-        // --- POIN 3: SQL INJECTION di Fitur Pencarian ---
-        // Penjelasan: Menggunakan string concatenation tanpa parameter agar rentan
-        private void txtCari_TextChanged(object sender, EventArgs e)
+        private void FormInputData_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = konn.GetConn())
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("sp_CariDataKematian", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@keyword", txtCari.Text);
+            TampilkanData();
+            TampilkanPenyebab();
 
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dtSearch = new DataTable();
-                    da.Fill(dtSearch);
-                    bs.DataSource = dtSearch; // Tetap pakai BindingSource (Poin 4)
-                }
-                catch (Exception ex) { /* Debug */ }
+            // Proteksi Role
+            if (GlobalData.Role == "Petugas")
+            {
+                btnHapus.Enabled = false;
+                btnCetak.Visible = false;
+            }
+        }
+
+        // --- POIN 2 & 4 & 5: View, Binding, & Binding Navigator ---
+        void TampilkanData()
+        {
+            // Menggunakan VIEW (v_DataKematianLengkap)
+            dt = konn.GetData("SELECT * FROM v_DataKematianLengkap");
+            bs.DataSource = dt;
+            dgvData.DataSource = bs;
+
+            // Menghubungkan Navigator
+            if (bindingNavigator1 != null)
+            {
+                bindingNavigator1.BindingSource = bs;
             }
         }
 
