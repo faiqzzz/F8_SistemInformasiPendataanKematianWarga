@@ -19,31 +19,6 @@ namespace SIP_KMW
             return conn;
         }
 
-        public DataTable GetData(string query)
-        {
-            DataTable dt = new DataTable();
-            try
-            {
-                using (SqlConnection conn = GetConn()) // Memastikan pakai koneksi dari class ini
-                {
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                    da.Fill(dt);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Error GetData: " + ex.Message);
-            }
-            return dt;
-        }
-    }
-
-    // Class Session untuk menyimpan data user yang sedang login
-    // Static artinya data ini tersimpan di memori selama aplikasi running
-    public static class Session
-    {
-        public static string UserID;
-        public static string NamaLengkap;
-        public static string Role;
+        
     }
 }
