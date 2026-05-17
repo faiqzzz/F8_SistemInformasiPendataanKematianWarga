@@ -13,7 +13,7 @@ namespace SIP_KMW
 {
     public partial class FormLogin : Form
     {
-        // Tetap panggil class Koneksi untuk keperluan login nanti
+        // Tetap panggil class Koneksi untuk keperluan login nanti.
         Koneksi konn = new Koneksi();
 
         public FormLogin()
@@ -44,7 +44,7 @@ namespace SIP_KMW
                     {
                         MessageBox.Show("Login Berhasil!");
 
-                        // Simpan session (opsional)
+                        // Simpan session (opsional).
                         Session.NamaLengkap = dt.Rows[0]["NamaLengkap"].ToString();
                         Session.Role = dt.Rows[0]["Role"].ToString();
 
