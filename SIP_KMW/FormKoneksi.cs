@@ -22,7 +22,7 @@ namespace SIP_KMW
         public FormKoneksi()
         {
             InitializeComponent();
-            btnLanjut.Enabled = false; // Tombol login dimatikan dulu
+            btnLanjut.Enabled = false; // Tombol login dimatikan dulu.
         }
 
         private void btnCekKoneksi_Click(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace SIP_KMW
 
                     MessageBox.Show("Koneksi Sukses!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Aktifkan tombol lanjut
+                    // Aktifkan tombol lanjut.
                     btnLanjut.Enabled = true;
                 }
                 catch (Exception ex)
