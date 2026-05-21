@@ -45,12 +45,13 @@
             // 
             // btnLanjut
             // 
+            this.btnLanjut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnLanjut.Location = new System.Drawing.Point(314, 301);
             this.btnLanjut.Name = "btnLanjut";
             this.btnLanjut.Size = new System.Drawing.Size(172, 23);
             this.btnLanjut.TabIndex = 1;
             this.btnLanjut.Text = "Login";
-            this.btnLanjut.UseVisualStyleBackColor = true;
+            this.btnLanjut.UseVisualStyleBackColor = false;
             this.btnLanjut.Click += new System.EventHandler(this.btnLanjut_Click);
             // 
             // lblStatus
@@ -66,6 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnLanjut);

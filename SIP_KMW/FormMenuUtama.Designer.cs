@@ -76,12 +76,13 @@ namespace SIP_KMW
             // 
             // btnLogout
             // 
+            this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnLogout.Location = new System.Drawing.Point(658, 381);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(75, 23);
             this.btnLogout.TabIndex = 3;
             this.btnLogout.Text = "LOGOUT";
-            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.UseVisualStyleBackColor = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblWelcome
@@ -104,12 +105,13 @@ namespace SIP_KMW
             // 
             // btnManajemenUser
             // 
+            this.btnManajemenUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnManajemenUser.Location = new System.Drawing.Point(279, 272);
             this.btnManajemenUser.Name = "btnManajemenUser";
             this.btnManajemenUser.Size = new System.Drawing.Size(243, 23);
             this.btnManajemenUser.TabIndex = 6;
             this.btnManajemenUser.Text = "ManajemenUser";
-            this.btnManajemenUser.UseVisualStyleBackColor = true;
+            this.btnManajemenUser.UseVisualStyleBackColor = false;
             this.btnManajemenUser.Visible = false;
             this.btnManajemenUser.Click += new System.EventHandler(this.btnManajemenUser_Click);
             // 
@@ -117,6 +119,7 @@ namespace SIP_KMW
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnManajemenUser);
             this.Controls.Add(this.lblRole);
