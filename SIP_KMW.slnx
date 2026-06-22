@@ -1,3 +1,9 @@
 <Solution>
-  <Project Path="SIP_KMW/SIP_KMW.csproj" Id="0c282705-29d0-431a-9a89-08f918668d0d" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="SIP_KMW/SIP_KMW.csproj" Id="0c282705-29d0-431a-9a89-08f918668d0d">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

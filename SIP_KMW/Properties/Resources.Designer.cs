@@ -63,6 +63,56 @@ namespace SIP_KMW.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_6ut1716ut1716ut1 {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_6ut1716ut1716ut1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_cotlgfcotlgfcotl {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_cotlgfcotlgfcotl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_gme1dngme1dngme1 {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_gme1dngme1dngme1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_gme1dngme1dngme1__1_ {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_gme1dngme1dngme1 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logo_SIP_KMW {
+            get {
+                object obj = ResourceManager.GetObject("logo SIP-KMW", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WhatsApp_Image_2026_04_20_at_12_14_06_AM {
             get {
                 object obj = ResourceManager.GetObject("WhatsApp Image 2026-04-20 at 12.14.06 AM", resourceCulture);

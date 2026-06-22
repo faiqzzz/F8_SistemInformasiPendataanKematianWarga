@@ -25,28 +25,27 @@ namespace SIP_KMW
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = konn.GetConn())
+            try
             {
-                try
+                // Celah SQL Injection sengaja dipertahankan untuk kebutuhan tugas
+                string query = "SELECT NamaLengkap, Role FROM Users WHERE Username = '" + txtUsername.Text + "' AND Password = @password";
+
+                using (SqlConnection conn = konn.GetConn())
                 {
-                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@password", txtPassword.Text);
 
-                    // --- POIN 3: SQL INJECTION (VULNERABLE CODE) ---
-                    // Kita pakai teknik tambah string (+) secara langsung. 
-                    // Ini berbahaya karena user bisa masukin tanda kutip (') buat manipulasi query.
-                    string query = "SELECT * FROM Users WHERE Username = '" + txtUsername.Text + "' AND Password = '" + txtPassword.Text + "'";
-
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
                     if (dt.Rows.Count > 0)
                     {
-                        MessageBox.Show("Login Berhasil!");
-
-                        // Simpan session (opsional)
                         GlobalData.NamaLengkap = dt.Rows[0]["NamaLengkap"].ToString();
                         GlobalData.Role = dt.Rows[0]["Role"].ToString();
+
+                        // Logging aktivitas normal
+                        CatatKeamanan("Login Sukses: " + txtUsername.Text);
 
                         FormMenuUtama utama = new FormMenuUtama();
                         utama.Show();
@@ -54,13 +53,39 @@ namespace SIP_KMW
                     }
                     else
                     {
+                        // Logging percobaan gagal - poin penting untuk analisis injection
+                        CatatKeamanan("Percobaan login gagal (Username: " + txtUsername.Text + ")");
                         MessageBox.Show("Username atau Password salah!");
                     }
                 }
-                catch (Exception ex)
+            }
+            catch (SqlException sqlEx)
+            {
+                // Menangkap error spesifik SQL (misal jika input mengandung karakter terlarang)
+                FormLog.SimpanLog("Terdeteksi SQL Error (Kemungkinan Injection): " + sqlEx.Message);
+                MessageBox.Show("Terjadi kesalahan pada query database.");
+            }
+            catch (Exception ex)
+            {
+                FormLog.SimpanLog("Error Login: " + ex.Message);
+                MessageBox.Show("Terjadi kesalahan sistem.");
+            }
+        }
+
+        private void CatatKeamanan(string aktivitas)
+        {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                string sql = "INSERT INTO LogKeamanan (aktivitas, waktu) VALUES (@aktivitas, GETDATE())";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@aktivitas", aktivitas);
+
+                try
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
                 }
+                catch { /* Gagal log, abaikan agar tidak mengganggu proses utama */ }
             }
         }
 

@@ -12,29 +12,38 @@ namespace SIP_KMW
     // Class untuk mengatur koneksi ke Database
     class Koneksi
     {
+        public static string GetServerIP()
+        {
+            // Ganti ke "." saat coding di laptop sendiri,
+            // Ganti ke "192.168.1.5" saat akan di-deploy ke teman
+            return @".\RIDHOFAIQAHMAD";
+        }
+
         public SqlConnection GetConn()
         {
-            // String koneksi kamu sudah benar mengarah ke PC Ridho
-            string stringKoneksi = @"Data Source=DESKTOP-DDDRHRS\RIDHOFAIQAHMAD;Initial Catalog=DB_SIPKMW;Integrated Security=True";
-            SqlConnection conn = new SqlConnection(stringKoneksi);
-            return conn;
+            string ip = "192.168.1.5";
+            // Pastikan Initial Catalog sama persis dengan nama database di SSMS
+            string connString = $"Data Source={ip};Initial Catalog=DB_SIPKMW;User ID=sa;Password=Password123;TrustServerCertificate=True;Connect Timeout=15;";
+
+            return new SqlConnection(connString);
         }
 
         public DataTable GetData(string query)
         {
             DataTable dt = new DataTable();
-            SqlConnection conn = GetConn(); // Pastikan namanya GetConn atau sesuai fungsi koneksimu
-            try
+            using (SqlConnection conn = GetConn())
             {
-                conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                da.Fill(dt);
+                try
+                {
+                    conn.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal membuka database: " + ex.Message, "Error Koneksi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally { conn.Close(); }
             return dt;
         }
 

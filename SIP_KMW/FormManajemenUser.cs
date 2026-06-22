@@ -9,7 +9,6 @@ namespace SIP_KMW
     public partial class FormManajemenUser : Form
     {
         Koneksi konn = new Koneksi();
-        DataTable dt = new DataTable();
 
         public FormManajemenUser()
         {
@@ -23,35 +22,26 @@ namespace SIP_KMW
 
         void TampilkanUser()
         {
-            using (SqlConnection conn = konn.GetConn())
+            string sql = "SELECT Username, NamaLengkap, Role FROM Users WHERE Username != 'sa'";
+            try
             {
-                try
-                {
-                    conn.Open();
-                    // Di sini tetap pakai query manual / View karena cuma SELECT
-                    string sql = "SELECT Username, NamaLengkap, Role FROM Users WHERE Username != 'sa'";
-                    SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-                    dt = new DataTable();
-                    da.Fill(dt);
-                    dgvUser.DataSource = dt;
-
-                    if (dgvUser.Columns.Count > 0)
-                    {
-                        dgvUser.Columns[1].Width = 200;
-                    }
-                }
-                catch (Exception ex) { MessageBox.Show("Gagal Tampil User: " + ex.Message); }
+                // Menggunakan method GetData dari Koneksi agar kode lebih bersih
+                dgvUser.DataSource = konn.GetData(sql);
+                if (dgvUser.Columns.Count > 0) dgvUser.Columns[1].Width = 200;
+            }
+            catch (Exception ex)
+            {
+                FormLog.SimpanLog("Gagal Tampil User: " + ex.Message);
+                MessageBox.Show("Gagal memuat data user.");
             }
         }
 
         // --- POIN 1: INSERT USER MENGGUNAKAN STORED PROCEDURE ---
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            // Validasi Input (Satpam)
-            // Filter: Hanya boleh huruf (a-z, A-Z) dan spasi (\s)
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txtNamaLengkap.Text, @"^[a-zA-Z\s]+$"))
+            if (!Regex.IsMatch(txtNamaLengkap.Text, @"^[a-zA-Z\s]+$"))
             {
-                MessageBox.Show("Nama Lengkap hanya boleh berisi huruf dan spasi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nama Lengkap hanya boleh berisi huruf dan spasi!");
                 return;
             }
 
@@ -61,35 +51,27 @@ namespace SIP_KMW
                 return;
             }
 
-            if (!Regex.IsMatch(txtUsername.Text, @"^[a-zA-Z0-9]+$"))
+            try
             {
-                MessageBox.Show("Username hanya boleh huruf dan angka!");
-                return;
-            }
-
-            using (SqlConnection conn = konn.GetConn())
-            {
-                try
+                using (SqlConnection conn = konn.GetConn())
                 {
                     conn.Open();
-                    // GANTI KE SP: sp_InsertUser (Pastikan kamu sudah buat SP ini di SQL)
                     SqlCommand cmd = new SqlCommand("sp_InsertUser", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.AddWithValue("@user", txtUsername.Text.ToLower());
                     cmd.Parameters.AddWithValue("@pass", txtPassword.Text);
                     cmd.Parameters.AddWithValue("@nama", txtNamaLengkap.Text);
                     cmd.Parameters.AddWithValue("@role", cbRole.Text);
-
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("User berhasil ditambahkan!");
-                    TampilkanUser();
-                    BersihkanInput();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Gagal Simpan: Username mungkin sudah ada atau SP belum dibuat.\nDetail: " + ex.Message);
-                }
+                MessageBox.Show("User berhasil ditambahkan!");
+                TampilkanUser();
+                BersihkanInput();
+            }
+            catch (Exception ex)
+            {
+                FormLog.SimpanLog("Gagal Simpan User: " + ex.Message);
+                MessageBox.Show("Gagal menyimpan: " + ex.Message);
             }
         }
 
@@ -98,33 +80,27 @@ namespace SIP_KMW
         {
             if (string.IsNullOrEmpty(txtUsername.Text)) return;
 
-            // Filter: Hanya boleh huruf (a-z, A-Z) dan spasi (\s)
-            if (!System.Text.RegularExpressions.Regex.IsMatch(txtNamaLengkap.Text, @"^[a-zA-Z\s]+$"))
+            try
             {
-                MessageBox.Show("Nama Lengkap hanya boleh berisi huruf dan spasi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (SqlConnection conn = konn.GetConn())
-            {
-                try
+                using (SqlConnection conn = konn.GetConn())
                 {
                     conn.Open();
-                    // GANTI KE SP: sp_UpdateUser
                     SqlCommand cmd = new SqlCommand("sp_UpdateUser", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.AddWithValue("@user", txtUsername.Text);
                     cmd.Parameters.AddWithValue("@pass", txtPassword.Text);
                     cmd.Parameters.AddWithValue("@nama", txtNamaLengkap.Text);
                     cmd.Parameters.AddWithValue("@role", cbRole.Text);
-
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Data user berhasil diperbarui!");
-                    TampilkanUser();
-                    BersihkanInput();
                 }
-                catch (Exception ex) { MessageBox.Show("Error Update: " + ex.Message); }
+                MessageBox.Show("Data user berhasil diperbarui!");
+                TampilkanUser();
+                BersihkanInput();
+            }
+            catch (Exception ex)
+            {
+                FormLog.SimpanLog("Error Update User: " + ex.Message);
+                MessageBox.Show("Error Update: " + ex.Message);
             }
         }
 
@@ -139,22 +115,24 @@ namespace SIP_KMW
 
             if (MessageBox.Show("Hapus user " + txtUsername.Text + "?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (SqlConnection conn = konn.GetConn())
+                try
                 {
-                    try
+                    using (SqlConnection conn = konn.GetConn())
                     {
                         conn.Open();
-                        // GANTI KE SP: sp_DeleteUser
                         SqlCommand cmd = new SqlCommand("sp_DeleteUser", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@user", txtUsername.Text);
-
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("User berhasil dihapus!");
-                        TampilkanUser();
-                        BersihkanInput();
                     }
-                    catch (Exception ex) { MessageBox.Show("Error Hapus: " + ex.Message); }
+                    MessageBox.Show("User berhasil dihapus!");
+                    TampilkanUser();
+                    BersihkanInput();
+                }
+                catch (Exception ex)
+                {
+                    FormLog.SimpanLog("Error Hapus User: " + ex.Message);
+                    MessageBox.Show("Error Hapus: " + ex.Message);
                 }
             }
         }
@@ -167,8 +145,7 @@ namespace SIP_KMW
                 txtUsername.Text = row.Cells["Username"].Value.ToString();
                 txtNamaLengkap.Text = row.Cells["NamaLengkap"].Value.ToString();
                 cbRole.Text = row.Cells["Role"].Value.ToString();
-
-                txtUsername.ReadOnly = true; // Username jangan boleh diganti pas update
+                txtUsername.ReadOnly = true;
             }
         }
 

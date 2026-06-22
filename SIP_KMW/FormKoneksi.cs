@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System;
 using System.Data.SqlClient;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 
@@ -31,16 +30,16 @@ namespace SIP_KMW
             {
                 try
                 {
-                    conn.Open();
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+
                     lblStatus.Text = "Status: Terkoneksi ke Database!";
                     lblStatus.ForeColor = System.Drawing.Color.Green;
 
                     MessageBox.Show("Koneksi Sukses!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Aktifkan tombol lanjut.
                     btnLanjut.Enabled = true;
                 }
-                catch (Exception ex) // Tangani error koneksi dengan baik, jangan biarkan aplikasi crash.
+                catch (Exception ex)
                 {
                     lblStatus.Text = "Status: Koneksi Gagal!";
                     lblStatus.ForeColor = System.Drawing.Color.Red;
@@ -62,6 +61,11 @@ namespace SIP_KMW
         }
 
         private void FormKoneksi_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

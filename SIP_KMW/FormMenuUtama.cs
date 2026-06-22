@@ -13,60 +13,12 @@ namespace SIP_KMW
 {
     public partial class FormMenuUtama : Form
     {
-        // Panggil class koneksi
         Koneksi konn = new Koneksi();
+        DAL dal = new DAL();
 
         public FormMenuUtama()
         {
             InitializeComponent();
-        }
-
-        // Event Activated: Supaya kalau kamu habis input data dan balik ke menu, angkanya update otomatis
-        private void FormMenuUtama_Activated(object sender, EventArgs e)
-        {
-            TampilkanStatistik();
-        }
-
-        private void FormMenuUtama_Load(object sender, EventArgs e)
-        {
-            // Menampilkan info Session
-            lblWelcome.Text = "Halo, " + GlobalData.NamaLengkap;
-            lblRole.Text = "Akses: " + GlobalData.Role;
-
-            // Memanggil angka statistik
-            TampilkanStatistik();
-
-            // Proteksi Fitur: Hanya SuperAdmin yang bisa lihat tombol Manajemen User
-            btnManajemenUser.Visible = (GlobalData.Role == "SuperAdmin");
-
-            btnBukaInput.Visible = true;
-        }
-
-        // POIN 2: Implementasi ExecuteScalar dengan VIEW
-        void TampilkanStatistik()
-        {
-            using (SqlConnection conn = konn.GetConn())
-            {
-                try
-                {
-                    conn.Open();
-                    // Pakai VIEW (v_DataKematianLengkap) agar poin 2 terpenuhi di semua form
-                    string sql = "SELECT COUNT(*) FROM v_DataKematianLengkap";
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-
-                    // ExecuteScalar digunakan untuk mengambil 1 nilai tunggal (jumlah data)
-                    object result = cmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        lblTotalData.Text = "TOTAL WARGA TERDATA MENINGGAL : " + result.ToString();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Minimal tampilkan di output debug jika ada error koneksi
-                    System.Diagnostics.Debug.WriteLine("Error Statistik: " + ex.Message);
-                }
-            }
         }
 
         private void btnBukaInput_Click(object sender, EventArgs e)
@@ -78,13 +30,12 @@ namespace SIP_KMW
 
         private void btnManajemenUser_Click(object sender, EventArgs e)
         {
-            FormManajemenUser mng = new FormManajemenUser();
-            mng.ShowDialog(); // ShowDialog agar user fokus selesaikan manajemen user dulu
+            FormManajemenUser frm = new FormManajemenUser();
+            frm.ShowDialog();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            // Bagian F: Konfirmasi Logout (Lebih User Friendly)
             DialogResult dialog = MessageBox.Show("Apakah Anda yakin ingin Logout?", "Konfirmasi",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -96,7 +47,87 @@ namespace SIP_KMW
             }
         }
 
-        // Hapus event kosong atau double yang tidak terpakai
-        private void lblTotalData_Click(object sender, EventArgs e) { }
+
+        private void lblTotalData_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblWelcome_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblRole_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chartJK_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chartKematian_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormMenuUtama_Load(object sender, EventArgs e)
+        {
+            lblWelcome.Text = "Halo, " + GlobalData.NamaLengkap;
+            lblRole.Text = "Akses: " + GlobalData.Role;
+
+            TampilkanStatistik();
+
+            // Logika Akses Tombol:
+            // 1. button1 (Manajemen User): HANYA SuperAdmin
+            // 2. btnBukaLog (Sistem Log): SuperAdmin DAN Admin
+            bool isSA = (GlobalData.Role == "SuperAdmin");
+            bool isAdminOrSA = (GlobalData.Role == "Admin" || GlobalData.Role == "Administrator" || GlobalData.Role == "SuperAdmin");
+
+            button1.Visible = isSA;
+            btnBukaLog.Visible = isAdminOrSA;
+
+            btnBukaInput.Visible = true;
+
+            dal.LoadGrafikData(chartKematian);
+            dal.LoadGrafikJK(chartJK);
+        }
+
+        void TampilkanStatistik()
+        {
+            using (SqlConnection conn = konn.GetConn())
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT COUNT(*) FROM v_DataKematianLengkap";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        lblTotalData.Text = "TOTAL WARGA TERDATA MENINGGAL : " + result.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error Statistik: " + ex.Message);
+                }
+            }
+        }
+
+        private void FormMenuUtama_Activated(object sender, EventArgs e)
+        {
+            TampilkanStatistik();
+        }
+
+
+        private void btnBukaLog_Click_1(object sender, EventArgs e)
+        {
+            FormLog frm = new FormLog();
+            frm.ShowDialog();
+        }
     }
 }

@@ -56,8 +56,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.btnCetak = new System.Windows.Forms.Button();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -69,10 +69,16 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnDownload = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnPilihFoto = new System.Windows.Forms.Button();
+            this.pbFoto = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNIK
@@ -117,7 +123,7 @@
             // 
             // dgvData
             // 
-            this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Location = new System.Drawing.Point(12, 31);
             this.dgvData.Name = "dgvData";
@@ -129,7 +135,7 @@
             // 
             // txtCari
             // 
-            this.txtCari.Location = new System.Drawing.Point(92, 328);
+            this.txtCari.Location = new System.Drawing.Point(92, 366);
             this.txtCari.Name = "txtCari";
             this.txtCari.Size = new System.Drawing.Size(200, 20);
             this.txtCari.TabIndex = 7;
@@ -219,7 +225,7 @@
             // btnKembali
             // 
             this.btnKembali.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btnKembali.Location = new System.Drawing.Point(355, 399);
+            this.btnKembali.Location = new System.Drawing.Point(686, 437);
             this.btnKembali.Name = "btnKembali";
             this.btnKembali.Size = new System.Drawing.Size(75, 23);
             this.btnKembali.TabIndex = 17;
@@ -302,7 +308,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(28, 332);
+            this.label9.Location = new System.Drawing.Point(28, 370);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 13);
             this.label9.TabIndex = 26;
@@ -311,7 +317,7 @@
             // btnCetak
             // 
             this.btnCetak.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.btnCetak.Location = new System.Drawing.Point(47, 399);
+            this.btnCetak.Location = new System.Drawing.Point(47, 437);
             this.btnCetak.Name = "btnCetak";
             this.btnCetak.Size = new System.Drawing.Size(224, 23);
             this.btnCetak.TabIndex = 27;
@@ -434,12 +440,67 @@
             this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(355, 437);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.TabIndex = 29;
+            this.btnImport.Text = "Import Data";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnDownload
+            // 
+            this.btnDownload.Location = new System.Drawing.Point(488, 437);
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Size = new System.Drawing.Size(111, 23);
+            this.btnDownload.TabIndex = 30;
+            this.btnDownload.Text = "Dowload Template";
+            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.Click += new System.EventHandler(this.btnDownloadTemplate_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(605, 437);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 31;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // btnPilihFoto
+            // 
+            this.btnPilihFoto.Location = new System.Drawing.Point(398, 390);
+            this.btnPilihFoto.Name = "btnPilihFoto";
+            this.btnPilihFoto.Size = new System.Drawing.Size(75, 23);
+            this.btnPilihFoto.TabIndex = 32;
+            this.btnPilihFoto.Text = "Pilih Foto";
+            this.btnPilihFoto.UseVisualStyleBackColor = true;
+            this.btnPilihFoto.Click += new System.EventHandler(this.btnPilihFoto_Click);
+            // 
+            // pbFoto
+            // 
+            this.pbFoto.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pbFoto.Location = new System.Drawing.Point(384, 283);
+            this.pbFoto.Name = "pbFoto";
+            this.pbFoto.Size = new System.Drawing.Size(100, 95);
+            this.pbFoto.TabIndex = 33;
+            this.pbFoto.TabStop = false;
+            this.pbFoto.Click += new System.EventHandler(this.pbFoto_Click);
+            // 
             // FormInputData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(800, 483);
+            this.Controls.Add(this.pbFoto);
+            this.Controls.Add(this.btnPilihFoto);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnDownload);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.btnCetak);
             this.Controls.Add(this.label9);
@@ -471,10 +532,11 @@
             this.Text = "FormInputData";
             this.Load += new System.EventHandler(this.FormInputData_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -521,5 +583,10 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnPilihFoto;
+        private System.Windows.Forms.PictureBox pbFoto;
     }
 }

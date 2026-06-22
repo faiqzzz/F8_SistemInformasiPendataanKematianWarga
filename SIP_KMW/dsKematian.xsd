@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsKematian" targetNamespace="http://tempuri.org/dsKematian.xsd" xmlns:mstns="http://tempuri.org/dsKematian.xsd" xmlns="http://tempuri.org/dsKematian.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DB_SIPKMWConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DB_SIPKMWConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.SIP_KMW.Properties.Settings.GlobalReference.Default.DB_SIPKMWConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="v_DataKematianLengkapTableAdapter" GeneratorDataComponentClassName="v_DataKematianLengkapTableAdapter" Name="v_DataKematianLengkap" UserDataComponentName="v_DataKematianLengkapTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DB_SIPKMWConnectionString (Settings)" DbObjectName="DB_SIPKMW.dbo.v_DataKematianLengkap" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT NIK, NamaAlmarhum, JenisKelamin, TanggalLahir, TanggalWafat, Usia, Penyebab, Alamat FROM dbo.v_DataKematianLengkap</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="NIK" DataSetColumn="NIK" />
+              <Mapping SourceColumn="NamaAlmarhum" DataSetColumn="NamaAlmarhum" />
+              <Mapping SourceColumn="JenisKelamin" DataSetColumn="JenisKelamin" />
+              <Mapping SourceColumn="TanggalLahir" DataSetColumn="TanggalLahir" />
+              <Mapping SourceColumn="TanggalWafat" DataSetColumn="TanggalWafat" />
+              <Mapping SourceColumn="Usia" DataSetColumn="Usia" />
+              <Mapping SourceColumn="Penyebab" DataSetColumn="Penyebab" />
+              <Mapping SourceColumn="Alamat" DataSetColumn="Alamat" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsKematian" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="dsKematian" msprop:Generator_DataSetName="dsKematian">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="v_DataKematianLengkap" msprop:Generator_RowEvHandlerName="v_DataKematianLengkapRowChangeEventHandler" msprop:Generator_RowDeletedName="v_DataKematianLengkapRowDeleted" msprop:Generator_RowDeletingName="v_DataKematianLengkapRowDeleting" msprop:Generator_RowEvArgName="v_DataKematianLengkapRowChangeEvent" msprop:Generator_TablePropName="v_DataKematianLengkap" msprop:Generator_RowChangedName="v_DataKematianLengkapRowChanged" msprop:Generator_RowChangingName="v_DataKematianLengkapRowChanging" msprop:Generator_TableClassName="v_DataKematianLengkapDataTable" msprop:Generator_RowClassName="v_DataKematianLengkapRow" msprop:Generator_TableVarName="tablev_DataKematianLengkap" msprop:Generator_UserTableName="v_DataKematianLengkap">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NIK" msprop:Generator_ColumnPropNameInRow="NIK" msprop:Generator_ColumnPropNameInTable="NIKColumn" msprop:Generator_ColumnVarNameInTable="columnNIK" msprop:Generator_UserColumnName="NIK">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="16" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NamaAlmarhum" msprop:Generator_ColumnPropNameInRow="NamaAlmarhum" msprop:Generator_ColumnPropNameInTable="NamaAlmarhumColumn" msprop:Generator_ColumnVarNameInTable="columnNamaAlmarhum" msprop:Generator_UserColumnName="NamaAlmarhum">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="JenisKelamin" msprop:Generator_ColumnPropNameInRow="JenisKelamin" msprop:Generator_ColumnPropNameInTable="JenisKelaminColumn" msprop:Generator_ColumnVarNameInTable="columnJenisKelamin" msprop:Generator_UserColumnName="JenisKelamin" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TanggalLahir" msprop:Generator_ColumnPropNameInRow="TanggalLahir" msprop:Generator_ColumnPropNameInTable="TanggalLahirColumn" msprop:Generator_ColumnVarNameInTable="columnTanggalLahir" msprop:Generator_UserColumnName="TanggalLahir" type="xs:dateTime" />
+              <xs:element name="TanggalWafat" msprop:Generator_ColumnPropNameInRow="TanggalWafat" msprop:Generator_ColumnPropNameInTable="TanggalWafatColumn" msprop:Generator_ColumnVarNameInTable="columnTanggalWafat" msprop:Generator_UserColumnName="TanggalWafat" type="xs:dateTime" />
+              <xs:element name="Usia" msprop:Generator_ColumnPropNameInRow="Usia" msprop:Generator_ColumnPropNameInTable="UsiaColumn" msprop:Generator_ColumnVarNameInTable="columnUsia" msprop:Generator_UserColumnName="Usia" type="xs:int" minOccurs="0" />
+              <xs:element name="Penyebab" msprop:Generator_ColumnPropNameInRow="Penyebab" msprop:Generator_ColumnPropNameInTable="PenyebabColumn" msprop:Generator_ColumnVarNameInTable="columnPenyebab" msprop:Generator_UserColumnName="Penyebab" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Alamat" msprop:Generator_ColumnPropNameInRow="Alamat" msprop:Generator_ColumnPropNameInTable="AlamatColumn" msprop:Generator_ColumnVarNameInTable="columnAlamat" msprop:Generator_UserColumnName="Alamat" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
